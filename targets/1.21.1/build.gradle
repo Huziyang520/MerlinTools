@@ -1,0 +1,142 @@
+// MerlinTools —— 1.21.1 编译目标（NeoForge 单端）。
+//
+// 源码来源：../../common（26.X 主线 common）经 Sync 到 build/shared，再与 overlay/ 合并。
+// 版本强制差异全部落在 overlay/，不在这里写 if。
+//
+// 工艺：ModDevGradle 2.0.147 + Gradle 8.x + JDK 21。1.21.1 的 NeoForge 跑在 Mojang 官方名上，
+// 所以既不需要 refmap，也不需要 Mixin 注解处理器。
+
+plugins {
+    id 'java'
+    id 'net.neoforged.moddev' version '2.0.147'
+}
+
+base {
+    archivesName = "${mod_id}-${version}-neoforge-${minecraft_version}"
+}
+
+tasks.withType(org.gradle.api.tasks.bundling.AbstractArchiveTask).configureEach {
+    archiveVersion.set('')
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(java_version as int)
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+repositories {
+    maven { name = 'AliyunPublic'; url = uri('https://maven.aliyun.com/repository/public') }
+    maven { name = 'TencentPublic'; url = uri('https://mirrors.cloud.tencent.com/nexus/repository/maven-public/') }
+    maven { name = 'NeoForged'; url = uri('https://maven.neoforged.net/releases') }
+}
+
+// ---------------------------------------------------------------------------
+// 共享源码：26.X common + overlay
+// ---------------------------------------------------------------------------
+// 清单由 文档\Plans\.probe-1.7.0\gen-ml-target.ps1 从实际 overlay 文件生成，
+// 判据是「1.21.1 原文与 common 对应文件是否逐字节相同」：相同的不进 overlay，由 common 提供。
+
+def overlaidJava = []
+
+def sharedJava = layout.buildDirectory.dir('shared/java')
+def sharedResources = layout.buildDirectory.dir('shared/resources')
+
+tasks.register('sharedJava', Sync) {
+    from('../../common/src/main/java') {
+        overlaidJava.each { exclude it }
+    }
+    from('overlay/java')
+    into sharedJava
+}
+
+tasks.register('sharedResources', Sync) {
+    // overlay 先写入，同名资源由它决定（EXCLUDE 会跳过后续重复）
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from('overlay/resources')
+    from('../../common/src/main/resources') {
+        // mixin 配置由 overlay 提供：1.21.1 的 compatibilityLevel 是 JAVA_21，且多一个 MixinGuiGraphics
+        exclude 'merlintools.mixins.json'
+
+        // 1.21.1 不读 assets/<ns>/items/（1.21.4 才引入 item model definitions）
+        exclude 'assets/merlintools/items/**'
+
+    }
+    into sharedResources
+}
+
+tasks.named('compileJava') { dependsOn 'sharedJava' }
+tasks.named('processResources') { dependsOn 'sharedResources' }
+
+sourceSets {
+    main {
+        java {
+            setSrcDirs([])
+            srcDir sharedJava
+        }
+        resources {
+            setSrcDirs([])
+            srcDir sharedResources
+            // Resources only this target ships: neoforge.mods.toml and merlintools.neoforge.mixins.json
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    filteringCharset = 'UTF-8'
+
+    var replaceProperties = [
+            minecraft_version      : minecraft_version, minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version, neo_version_range: neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id, mod_name: mod_name, mod_license: license, mod_version: version,
+            mod_authors            : mod_author, mod_description: mod_description,
+            mod_credits            : credits,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_name,
+                'Specification-Vendor'    : mod_author,
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.version,
+                'Implementation-Vendor'   : mod_author,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'Built-On-Minecraft'      : minecraft_version,
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xmaxerrs', '1000']
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+    options.addStringOption('Xdoclint:none', '-quiet')
+}

@@ -1,0 +1,29 @@
+license = "${license}"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${version}"
+displayName = "${mod_name}"
+# displayURL / issueTrackerURL MUST stay inside the [[mods]] table, otherwise the mod list shows no
+# homepage / issue button at all.
+displayURL = "https://github.com/Huziyang520/MerlinTools"
+issueTrackerURL = "https://github.com/Huziyang520/MerlinTools/issues"
+credits = "${credits}"
+authors = "${mod_author}"
+description = '''${description}'''
+[[mixins]]
+config = "${mod_id}.mixins.json"
+[[mixins]]
+config = "${mod_id}.neoforge.mixins.json"
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge_version},)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"

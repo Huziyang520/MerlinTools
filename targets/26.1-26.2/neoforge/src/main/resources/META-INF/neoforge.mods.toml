@@ -1,0 +1,35 @@
+# This target covers 26.1 ~ 26.2 and compiles against 26.1.2:
+# - modLoader / loaderVersion became optional in 26.3 only; the 26.1.2 line still expects them,
+#   and keeping them does no harm on 26.2.
+modLoader = "javafml"
+loaderVersion = "${neoforge_loader_version_range}"
+license = "${license}"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${version}"
+displayName = "${mod_name}"
+# displayURL / issueTrackerURL MUST stay inside the [[mods]] table, otherwise the mod list shows no
+# homepage / issue button at all.
+displayURL = "https://github.com/Huziyang520/MerlinTools"
+issueTrackerURL = "https://github.com/Huziyang520/MerlinTools/issues"
+credits = "${credits}"
+authors = "${mod_author}"
+description = '''${description}'''
+[[mixins]]
+config = "${mod_id}.mixins.json"
+[[mixins]]
+config = "${mod_id}.neoforge.mixins.json"
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+# Not [26.1.2.94,): that would reject the NeoForge builds of 26.1 / 26.1.1.
+versionRange = "[26.1,26.3)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
