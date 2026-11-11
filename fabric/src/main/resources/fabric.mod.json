@@ -31,7 +31,7 @@
         "minecraft": "~${minecraft_version}",
         "java": ">=${java_version}"
     },
-    "icon": "MT.png",
+    "icon": "mt.png",
     "custom": {
         "modmenu": {
             "links": {

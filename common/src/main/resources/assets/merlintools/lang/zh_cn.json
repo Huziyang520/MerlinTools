@@ -1,10 +1,4 @@
 {
-  "command.merlintools.book.given": "已给予 %s 的附魔书，等级 %s",
-  "command.merlintools.editorhotkey.off": "已关闭物品编辑热键（写入 client.toml）",
-  "command.merlintools.editorhotkey.on": "已开启物品编辑热键（写入 client.toml）",
-  "command.merlintools.invalid_id": "%s 不是合法的标识符",
-  "command.merlintools.not_in_registry": "%s 不在游戏的附魔注册表中",
-  "command.merlintools.player_only": "该命令只能由玩家执行",
   "gui.merlintools.confirm.delete": "确认删除",
   "gui.merlintools.confirm.title": "确认操作",
   "gui.merlintools.confirm.warning": "将移除该物品的全部附魔！",
@@ -148,8 +142,5 @@
   "merlintools.configuration.tools.max_test_weapon_damage.tooltip": "测试武器伤害值的上限",
   "message.merlintools.config.needs_screen": "MerlinTools：可视化配置界面需要安装 Cloth Config API 或 Jupiter，当前两者都未安装。可改为编辑 config/MerlinTools/client.toml。",
   "message.merlintools.no_permission": "MerlinTools：服务端未授予你使用该工具的权限",
-  "command.merlintools.layers.done": "已为 %1$s 叠加 %2$s 层，每层 %3$s 秒",
-  "command.merlintools.layers.unknown": "没有名为 %s 的分层效果",
-  "command.merlintools.layers.player_only": "只能由玩家执行",
   "key.category.merlintools.main": "MerlinTools"
 }

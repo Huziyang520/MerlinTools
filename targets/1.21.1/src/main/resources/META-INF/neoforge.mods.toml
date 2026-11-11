@@ -16,7 +16,7 @@ description = '''${mod_description}'''
 # displayURL / issueTrackerURL MUST stay inside the [[mods]] table.
 displayURL = "https://github.com/Huziyang520/MerlinTools"
 issueTrackerURL = "https://github.com/Huziyang520/MerlinTools/issues"
-logoFile = "MT.png"
+logoFile = "mt.png"
 
 [[mixins]]
 config = "${mod_id}.mixins.json"

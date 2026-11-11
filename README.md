@@ -1,93 +1,57 @@
 # MerlinTools
 
-[English](#english) | [中文](#中文)
+[![Issues](https://img.shields.io/github/issues/Huziyang520/MerlinTools?label=issues)](https://github.com/Huziyang520/MerlinTools/issues)
+[![Releases](https://img.shields.io/github/v/release/Huziyang520/MerlinTools?label=release)](https://github.com/Huziyang520/MerlinTools/releases)
+[![License](https://img.shields.io/badge/license-CC0--1.0-blue)](https://github.com/Huziyang520/MerlinTools/blob/master/LICENSE)
 
----
+A testing toolkit for Minecraft: editable test weapons, an item editor, a health editor, command
+macros and HUD readouts. Every part can be switched off, and the mod works on its own.
 
-## English
+面向玩家的测试工具集：可编辑的测试武器、物品编辑、血量编辑、指令宏与 HUD 读数；每一项都能单独关闭，
+模组也可以独立安装使用。
 
-MerlinTools is a Minecraft **testing toolkit**: test weapons, an item editor, a health editor,
-command macros and HUD readouts, switchable one by one and installable on its own.
+## What it does / 功能
 
-- Sides: **client and server**
-- Author: Huziyang520 · Licence: **CC0 1.0**
-- Repository: <https://github.com/Huziyang520/MerlinTools> · Issues: <https://github.com/Huziyang520/MerlinTools/issues>
-
-### Supported versions
-
-| Branch | Minecraft | Loader |
+| Part | 部件 | What it does / 作用 |
 |---|---|---|
-| [`master`](https://github.com/Huziyang520/MerlinTools/tree/master) | 26.X | NeoForge, Fabric |
-| [`1.20.1`](https://github.com/Huziyang520/MerlinTools/tree/1.20.1) | 1.20.1 | Forge |
+| Test weapons | 测试武器 | Sword, axe, spear and trident built as editable variants of the vanilla ones — damage and enchantments are yours to set. |
+| Item editor | 物品编辑 | Rewrites the held item: enchantments, custom name and base damage. |
+| Health editor | 血量编辑 | Sets maximum and current health of a mob or a player. |
+| Command macros | 指令宏 | Stores command sequences and runs them from one screen. |
+| HUD readouts | HUD 读数 | Damage of the weapon you just used near the crosshair, damage numbers over mobs, a folded health bar for huge health pools. |
+| Switches | 开关 | Every part has its own switch; the whole toolkit can be limited to operators. |
 
-A branch that covers a range of game versions ships one jar for the whole range.
+## Install / 安装
 
-### What is inside
+Drop the jar into `mods/`. Fabric needs Fabric API. Cloth Config is optional: with it installed the
+configuration opens in Cloth's screen, without it the mod edits its own files.
 
-| Part | What it does |
-|---|---|
-| **Test weapons** | sword, axe, spear and trident built as editable variants of the vanilla ones |
-| **Item editor** | rewrites the held item: enchantments, name and base damage |
-| **Health editor** | sets maximum and current health of a mob or a player |
-| **Command macros** | stores command sequences and runs them from one screen |
-| **HUD readouts** | crosshair damage, damage numbers and a folded health bar |
-| **Configuration screen** | NeoForge's own configuration page; on Fabric, Cloth Config when it is installed |
-| **Commands** | `/merlintools editor`, `health`, `macro` and `config` |
-| **Switches** | every part can be turned off, and the whole toolkit can be limited to operators |
+把 jar 放进 `mods/`。Fabric 端需要 Fabric API；Cloth Config 是可选的，装了才用它的配置界面，
+不装就由模组自己读写配置文件。
 
-### Documentation
+## Configuration / 配置
 
-Usage — configuration keys, commands, item ids and the configuration screen: [`docs/USAGE.md`](docs/USAGE.md).
+The mod writes `config/MerlinTools/client.toml`, `config/MerlinTools/server.toml` and
+`config/MerlinTools/macros.json`. The configuration screen opens from the mod list; changes apply on
+save, no restart. NeoForge uses its own configuration page, so both files are reachable from there.
 
-### Licence
+模组会生成 `config/MerlinTools/client.toml`、`server.toml` 与 `macros.json`。配置界面从模组列表打开，
+保存即生效、不用重启；NeoForge 用自带的配置页，两个文件都能在那一页里改。
 
-Released under **CC0 1.0**, see [LICENSE](LICENSE).
-
-```
-Copyright (c) 2026 Huziyang520
-```
-
----
-
-## 中文
-
-MerlinTools 是一款 Minecraft **测试工具集**：测试武器、物品编辑、血量编辑、指令宏与 HUD 读数，
-每一项都能单独关闭，也可以独立安装使用。
-
-- 部署属性：**客户端 + 服务端模组**
-- 作者：Huziyang520 · 许可证：**CC0 1.0**
-- 仓库：<https://github.com/Huziyang520/MerlinTools> · 问题反馈：<https://github.com/Huziyang520/MerlinTools/issues>
-
-### 支持版本
-
-| 分支 | Minecraft | 加载器 |
+| Section | 分组 | Holds / 内容 |
 |---|---|---|
-| [`master`](https://github.com/Huziyang520/MerlinTools/tree/master) | 26.X | NeoForge, Fabric |
-| [`1.20.1`](https://github.com/Huziyang520/MerlinTools/tree/1.20.1) | 1.20.1 | Forge |
+| `hud` | HUD | Crosshair damage and how long it stays, folded health bar, armour row placement. |
+| `floating_text` | 伤害飘字 | Damage numbers: on/off, duration, scale, colours, how many at once. |
+| `editor` | 物品编辑 | Editor hotkey, value step for shift-click and for the mouse wheel. |
+| `macros` | 指令宏 | Master switch of the macro screen. |
+| `security` | 权限 | Operator-only mode, permission needed to open the item editor and the health editor. |
+| `tools` | 测试工具 | Damage and enchantment ceilings, which items the editor accepts, health editor requirements. |
 
-覆盖一段游戏版本的分支，为整段版本提供同一个 jar。
+## Links / 链接
 
-### 内置内容
+- Source, releases and issue tracker: <https://github.com/Huziyang520/MerlinTools>
+- Backup feedback address: <https://issue.mengcai.online/>
 
-| 部件 | 作用 |
-|---|---|
-| **测试武器** | 剑 / 斧 / 长矛 / 三叉戟，原版武器的可编辑变体 |
-| **物品编辑** | 改写手持物品：附魔、名称、基础伤害 |
-| **血量编辑** | 设置生物或玩家的最大生命值与当前生命值 |
-| **指令宏** | 保存指令序列，在一个界面里执行 |
-| **HUD 读数** | 准心伤害、伤害飘字与折叠血条 |
-| **配置界面** | NeoForge 用自带的配置页；Fabric 上装了 Cloth Config 就用它的界面 |
-| **指令** | `/merlintools editor`、`health`、`macro`、`config` |
-| **开关** | 每个部件都能关闭，整套工具可以限制为仅 OP 可用 |
+## Licence / 许可证
 
-### 文档
-
-用法——配置键、指令、物品 id 与配置界面：[`docs/USAGE.md`](docs/USAGE.md)。
-
-### 许可证
-
-本项目以 **CC0 1.0** 协议开源，协议全文见 [LICENSE](LICENSE)。
-
-```
-Copyright (c) 2026 Huziyang520
-```
+CC0 1.0 Universal — do whatever you want with it. Copyright (c) 2026 Huziyang520.

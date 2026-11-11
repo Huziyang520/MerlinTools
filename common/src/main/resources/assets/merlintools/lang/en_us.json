@@ -1,10 +1,4 @@
 {
-  "command.merlintools.book.given": "Gave the enchanted book of %s at level %s",
-  "command.merlintools.editorhotkey.off": "Item editor hotkey disabled (written to client.toml)",
-  "command.merlintools.editorhotkey.on": "Item editor hotkey enabled (written to client.toml)",
-  "command.merlintools.invalid_id": "%s is not a valid identifier",
-  "command.merlintools.not_in_registry": "%s is not in the enchantment registry",
-  "command.merlintools.player_only": "This command can only be run by a player",
   "gui.merlintools.confirm.delete": "Delete",
   "gui.merlintools.confirm.title": "Confirm",
   "gui.merlintools.confirm.warning": "This will remove every enchantment from the item!",
@@ -148,8 +142,5 @@
   "merlintools.configuration.tools.max_test_weapon_damage.tooltip": "Upper bound for the damage value of the test weapons.",
   "message.merlintools.config.needs_screen": "MerlinTools: the visual configuration screen needs Cloth Config API or Jupiter, and neither is installed. Edit config/MerlinTools/client.toml instead.",
   "message.merlintools.no_permission": "MerlinTools: this server has not granted you permission to use that tool",
-  "command.merlintools.layers.done": "Applied %2$s layer(s) of %1$s for %3$s second(s)",
-  "command.merlintools.layers.unknown": "No layered effect registered as %s",
-  "command.merlintools.layers.player_only": "Run this as a player",
   "key.category.merlintools.main": "MerlinTools"
 }
