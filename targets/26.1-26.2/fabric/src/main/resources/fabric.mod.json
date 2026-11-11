@@ -16,6 +16,9 @@
     "entrypoints": {
         "main": [
             "com.huziyang520.merlintools.MerlinToolsFabric"
+        ],
+        "client": [
+            "com.huziyang520.merlintools.client.MerlinToolsFabricClient"
         ]
     },
     "mixins": [

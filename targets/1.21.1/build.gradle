@@ -1,10 +1,10 @@
-// MerlinTools —— 1.21.1 编译目标（NeoForge 单端）。
+// MerlinTools - the 1.21.1 compile target (NeoForge only).
 //
-// 源码来源：../../common（26.X 主线 common）经 Sync 到 build/shared，再与 overlay/ 合并。
-// 版本强制差异全部落在 overlay/，不在这里写 if。
+// Sources come from ../../common (the 26.X common tree) plus overlay/; every forced version
+// difference lives in overlay, never in an if here.
 //
-// 工艺：ModDevGradle 2.0.147 + Gradle 8.x + JDK 21。1.21.1 的 NeoForge 跑在 Mojang 官方名上，
-// 所以既不需要 refmap，也不需要 Mixin 注解处理器。
+// ModDevGradle 2.0.147 + Gradle 9.7.1 + JDK 21. NeoForge 1.21.1 runs on Mojang names, so there is
+// no refmap and no Mixin annotation processor.
 
 plugins {
     id 'java'
@@ -46,13 +46,44 @@ repositories {
     maven { name = 'NeoForged'; url = uri('https://maven.neoforged.net/releases') }
 }
 
-// ---------------------------------------------------------------------------
-// 共享源码：26.X common + overlay
-// ---------------------------------------------------------------------------
-// 清单由 文档\Plans\.probe-1.7.0\gen-ml-target.ps1 从实际 overlay 文件生成，
-// 判据是「1.21.1 原文与 common 对应文件是否逐字节相同」：相同的不进 overlay，由 common 提供。
-
-def overlaidJava = []
+// Files under overlay/java replace the common one with the same path.
+def overlaidJava = [
+        'com/huziyang520/merlintools/MerlinToolsNeoForge.java',
+        'com/huziyang520/merlintools/client/MerlinToolsNeoForgeClient.java',
+        'com/huziyang520/merlintools/client/HudRowPolicy.java',
+        'com/huziyang520/merlintools/client/TestTridentRenderer.java',
+        'com/huziyang520/merlintools/config/NeoConfigs.java',
+        'com/huziyang520/merlintools/config/NeoSpecBackend.java',
+        'com/huziyang520/merlintools/impl/PermissionGate.java',
+        'com/huziyang520/merlintools/mixin/MixinHud.java',
+        'com/huziyang520/merlintools/mixin/RangedAttributeAccessor.java',
+        'com/huziyang520/merlintools/mixin/MixinMinecraftUseItem.java',
+        'com/huziyang520/merlintools/network/DamageFeedbackPayload.java',
+        'com/huziyang520/merlintools/network/HealthEditPayload.java',
+        'com/huziyang520/merlintools/network/ItemEditPayload.java',
+        'com/huziyang520/merlintools/platform/NeoForgeRegistrationBridge.java',
+        'com/huziyang520/merlintools/platform/services/IRegistrationBridge.java',
+        'com/huziyang520/merlintools/tools/HealthCeiling.java',
+        'com/huziyang520/merlintools/tools/HealthEditorItem.java',
+        'com/huziyang520/merlintools/tools/TestTridentItem.java',
+        'com/huziyang520/merlintools/tools/TestWeapons.java',
+        'com/huziyang520/merlintools/tools/ToolCreativeEntries.java',
+        'com/huziyang520/merlintools/tools/hotkey/HotkeyRegistry.java',
+        'com/huziyang520/merlintools/tools/hud/CombatFeedback.java',
+        'com/huziyang520/merlintools/tools/ui/ConfigScreens.java',
+        'com/huziyang520/merlintools/tools/ui/DeleteEnchantsConfirmScreen.java',
+        'com/huziyang520/merlintools/tools/ui/EnchantSelectionScreen.java',
+        'com/huziyang520/merlintools/tools/ui/EnchantmentLevel.java',
+        'com/huziyang520/merlintools/tools/ui/HealthEditorScreen.java',
+        'com/huziyang520/merlintools/tools/ui/ItemEditorScreen.java',
+        'com/huziyang520/merlintools/tools/ui/MacroScreen.java',
+        'com/huziyang520/merlintools/tools/ui/MerlinScreens.java',
+        'com/huziyang520/merlintools/tools/ui/MerlinUi.java',
+        'com/huziyang520/merlintools/tools/ui/vanilla/PanelLayout.java',
+        'com/huziyang520/merlintools/tools/ui/vanilla/ScrollArea.java',
+        'com/huziyang520/merlintools/tools/ui/vanilla/VanillaScreen.java',
+        'com/huziyang520/merlintools/tools/ui/vanilla/VanillaUi.java',
+]
 
 def sharedJava = layout.buildDirectory.dir('shared/java')
 def sharedResources = layout.buildDirectory.dir('shared/resources')
@@ -66,16 +97,13 @@ tasks.register('sharedJava', Sync) {
 }
 
 tasks.register('sharedResources', Sync) {
-    // overlay 先写入，同名资源由它决定（EXCLUDE 会跳过后续重复）
+    // overlay wins on a name clash: it is written first, EXCLUDE skips the duplicate from common.
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from('overlay/resources')
     from('../../common/src/main/resources') {
-        // mixin 配置由 overlay 提供：1.21.1 的 compatibilityLevel 是 JAVA_21，且多一个 MixinGuiGraphics
         exclude 'merlintools.mixins.json'
-
-        // 1.21.1 不读 assets/<ns>/items/（1.21.4 才引入 item model definitions）
+        // 1.21.1 does not read assets/<ns>/items/; item model definitions arrived in 1.21.4.
         exclude 'assets/merlintools/items/**'
-
     }
     into sharedResources
 }
@@ -92,7 +120,8 @@ sourceSets {
         resources {
             setSrcDirs([])
             srcDir sharedResources
-            // Resources only this target ships: neoforge.mods.toml and merlintools.neoforge.mixins.json
+            // Resources only this target ships: neoforge.mods.toml, the neoforge mixin config,
+            // pack.mcmeta and the icon.
             srcDir 'src/main/resources'
         }
     }
@@ -125,7 +154,6 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Title'    : project.name,
                 'Implementation-Version'  : project.version,
                 'Implementation-Vendor'   : mod_author,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 'Built-On-Minecraft'      : minecraft_version,
         ])
     }

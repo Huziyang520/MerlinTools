@@ -34,7 +34,13 @@ configurations {
     }
 }
 
-def overlaidJava = []
+def overlaidJava = [
+        'com/huziyang520/merlintools/tools/TestWeapons.java',
+        'com/huziyang520/merlintools/tools/hud/CombatFeedback.java',
+        'com/huziyang520/merlintools/mixin/MixinHud.java',
+        'com/huziyang520/merlintools/mixin/MixinMinecraftUseItem.java',
+        'com/huziyang520/merlintools/client/ClientAccess.java'
+]
 def sharedJava = layout.buildDirectory.dir('shared/java')
 def sharedResources = layout.buildDirectory.dir('shared/resources')
 

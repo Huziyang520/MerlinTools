@@ -1,0 +1,11 @@
+// Loader specific bridge for registering content into a plain (non datapack) game registry.
+
+package com.huziyang520.merlintools.platform.services;
+
+import net.minecraft.core.Registry;
+import net.minecraft.resources.Identifier;
+import java.util.function.Supplier;
+
+public interface IRegistrationBridge extends ILoaderBridge {
+    <T> void register(Registry<T> registry, Identifier id, Supplier<T> value);
+}
