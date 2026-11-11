@@ -15,7 +15,7 @@ credits="${credits}"
 description="${description}"
 displayURL="https://github.com/Huziyang520/MerlinTools"
 issueTrackerURL="https://github.com/Huziyang520/MerlinTools/issues"
-logoFile="MT.png"
+logoFile="mt.png"
 
 [[dependencies.${mod_id}]]
     modId="forge"
