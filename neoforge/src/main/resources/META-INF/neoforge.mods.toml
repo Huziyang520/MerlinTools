@@ -8,7 +8,7 @@ displayName = "${mod_name}"
 # homepage / issue button at all.
 displayURL = "https://github.com/Huziyang520/MerlinTools"
 issueTrackerURL = "https://github.com/Huziyang520/MerlinTools/issues"
-iconFile = "${mod_id}.png"
+iconFile = "MT.png"
 credits = "${credits}"
 authors = "${mod_author}"
 description = '''${description}'''

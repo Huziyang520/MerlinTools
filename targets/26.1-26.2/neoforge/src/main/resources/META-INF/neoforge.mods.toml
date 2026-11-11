@@ -14,8 +14,8 @@ displayName = "${mod_name}"
 displayURL = "https://github.com/Huziyang520/MerlinTools"
 issueTrackerURL = "https://github.com/Huziyang520/MerlinTools/issues"
 # 26.1.2 only reads logoFile, 26.2+ reads iconFile; one jar covers both.
-logoFile = "${mod_id}.png"
-iconFile = "${mod_id}.png"
+logoFile = "MT.png"
+iconFile = "MT.png"
 credits = "${credits}"
 authors = "${mod_author}"
 description = '''${description}'''

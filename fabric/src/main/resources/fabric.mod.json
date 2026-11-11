@@ -31,5 +31,5 @@
         "minecraft": "~${minecraft_version}",
         "java": ">=${java_version}"
     },
-    "icon": "merlintools.png"
+    "icon": "MT.png"
 }
