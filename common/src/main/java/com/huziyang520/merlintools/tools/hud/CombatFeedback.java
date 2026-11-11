@@ -69,6 +69,12 @@ public final class CombatFeedback {
     }
 
     public void onLocalSwing(Player player, Entity target, boolean critical) {
+        float listed = (float) player.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
+        if (listed > 0.0F) {
+            this.hudDamage = Math.max(0.5F, listed);
+            this.hudCritical = critical;
+            this.hudTicks = Math.max(1, ConfigManager.client().crosshairDamageTicks());
+        }
         if (critical) {
             this.criticalUntil.put(target.getId(), (int) (this.tickCounter + CRIT_MEMORY_TICKS));
         }

@@ -30,5 +30,6 @@
         "fabric-api": "*",
         "minecraft": ">=26.1 <26.3",
         "java": ">=${java_version}"
-    }
+    },
+    "icon": "merlintools.png"
 }

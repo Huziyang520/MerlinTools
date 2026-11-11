@@ -5,7 +5,7 @@
       {
         "model": {
           "type": "minecraft:model",
-          "model": "merlinlib:item/test_trident"
+          "model": "merlintools:item/test_trident"
         },
         "when": [
           "gui",

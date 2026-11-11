@@ -26,12 +26,18 @@ A branch that covers a range of game versions ships one jar for the whole range.
 
 | Part | What it does |
 |---|---|
-| **Test weapons** | sword, axe and trident built as editable variants of the vanilla ones |
-| **Item editor** | rewrites the held item: enchantments, name, attributes, durability |
+| **Test weapons** | sword, axe, spear and trident built as editable variants of the vanilla ones |
+| **Item editor** | rewrites the held item: enchantments, name and base damage |
 | **Health editor** | sets maximum and current health of a mob or a player |
 | **Command macros** | stores command sequences and runs them from one screen |
-| **HUD readouts** | crosshair damage and floating damage numbers |
+| **HUD readouts** | crosshair damage, damage numbers and a folded health bar |
+| **Configuration screen** | NeoForge's own configuration page; on Fabric, Cloth Config when it is installed |
+| **Commands** | `/merlintools editor`, `health`, `macro` and `config` |
 | **Switches** | every part can be turned off, and the whole toolkit can be limited to operators |
+
+### Documentation
+
+Usage — configuration keys, commands, item ids and the configuration screen: [`docs/USAGE.md`](docs/USAGE.md).
 
 ### Licence
 
@@ -65,12 +71,18 @@ MerlinTools 是一款 Minecraft **测试工具集**：测试武器、物品编�
 
 | 部件 | 作用 |
 |---|---|
-| **测试武器** | 剑 / 斧 / 三叉戟，原版武器的可编辑变体 |
-| **物品编辑** | 改写手持物品：附魔、名称、属性、耐久 |
+| **测试武器** | 剑 / 斧 / 长矛 / 三叉戟，原版武器的可编辑变体 |
+| **物品编辑** | 改写手持物品：附魔、名称、基础伤害 |
 | **血量编辑** | 设置生物或玩家的最大生命值与当前生命值 |
 | **指令宏** | 保存指令序列，在一个界面里执行 |
-| **HUD 读数** | 准心伤害与受伤飘字 |
+| **HUD 读数** | 准心伤害、伤害飘字与折叠血条 |
+| **配置界面** | NeoForge 用自带的配置页；Fabric 上装了 Cloth Config 就用它的界面 |
+| **指令** | `/merlintools editor`、`health`、`macro`、`config` |
 | **开关** | 每个部件都能关闭，整套工具可以限制为仅 OP 可用 |
+
+### 文档
+
+用法——配置键、指令、物品 id 与配置界面：[`docs/USAGE.md`](docs/USAGE.md)。
 
 ### 许可证
 

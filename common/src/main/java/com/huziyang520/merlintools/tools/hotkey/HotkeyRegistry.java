@@ -93,9 +93,9 @@ public final class HotkeyRegistry {
 
     public static KeyMapping mapping(int keyCode) {
         return MAPPINGS.computeIfAbsent(keyCode, code -> code <= MAX_MOUSE_CODE
-                ? new KeyMapping("key.merlinlib.hotkey.mouse." + code, InputConstants.Type.MOUSE, code,
+                ? new KeyMapping("key.merlintools.hotkey.mouse." + code, InputConstants.Type.MOUSE, code,
                         KeyMapping.Category.MISC)
-                : new KeyMapping("key.merlinlib.hotkey." + code, code, KeyMapping.Category.MISC));
+                : new KeyMapping("key.merlintools.hotkey." + code, code, KeyMapping.Category.MISC));
     }
 
     public static void release(int keyCode) {
@@ -107,14 +107,14 @@ public final class HotkeyRegistry {
 
     public static String keyName(int keyCode) {
         if (keyCode < 0) {
-            return Component.translatable("key.merlinlib.unbound").getString();
+            return Component.translatable("key.merlintools.unbound").getString();
         }
         return mapping(keyCode).getTranslatedKeyMessage().getString();
     }
 
     public static String comboName(KeyCombo combo) {
         if (combo == null || combo.isEmpty()) {
-            return Component.translatable("key.merlinlib.unbound").getString();
+            return Component.translatable("key.merlintools.unbound").getString();
         }
         StringBuilder builder = new StringBuilder();
         for (int key : combo.keys()) {

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "merlinlib:item/health_editor"
+    "model": "merlintools:item/health_editor"
   }
 }

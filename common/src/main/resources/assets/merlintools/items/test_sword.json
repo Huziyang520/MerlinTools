@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "merlinlib:item/test_sword"
+    "model": "merlintools:item/test_sword"
   }
 }

@@ -47,6 +47,7 @@ public class MerlinToolsNeoForgeClient {
         NeoForge.EVENT_BUS.addListener(this::onClientTick);
         NeoForge.EVENT_BUS.addListener(this::onRegisterClientCommands);
         NeoForge.EVENT_BUS.addListener(this::onUseEntity);
+        NeoForge.EVENT_BUS.addListener(this::onAttack);
         DamageFeedbackSink.setClientSink(payload ->
                 CombatFeedback.instance().onServerDamage(payload.damage(), payload.critical(), payload.targetId()));
         ServerSender.setSink(payload ->
@@ -121,6 +122,12 @@ public class MerlinToolsNeoForgeClient {
         if (event.getLevel().isClientSide() && event.getEntity().isShiftKeyDown()
                 && event.getTarget() instanceof net.minecraft.world.entity.LivingEntity living) {
             MerlinScreens.openHealthEditor(null, living);
+        }
+    }
+
+    private void onAttack(net.neoforged.neoforge.event.entity.player.AttackEntityEvent event) {
+        if (event.getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+            CombatFeedback.instance().onLocalSwing(player, event.getTarget(), CombatFeedback.isCritical(player));
         }
     }
 }
