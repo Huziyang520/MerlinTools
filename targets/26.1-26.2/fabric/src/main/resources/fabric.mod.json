@@ -31,5 +31,12 @@
         "minecraft": ">=26.1 <26.3",
         "java": ">=${java_version}"
     },
-    "icon": "MT.png"
+    "icon": "MT.png",
+    "custom": {
+        "modmenu": {
+            "links": {
+                "备用反馈地址": "https://issue.mengcai.online/"
+            }
+        }
+    }
 }

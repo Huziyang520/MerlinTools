@@ -63,12 +63,6 @@ public final class NeoConfigs {
                         "Upper bound on simultaneous damage numbers; the oldest one is dropped first.")
                 .pop();
 
-        spec.push("particles")
-                .bool("limit_enabled", true,
-                        "Cap how many particles this client draws, so a single huge hit cannot freeze it.")
-                .number("limit", 512, 1, 1000000, "How many particles may be drawn per 1/20 second.")
-                .pop();
-
         spec.push("editor")
                 .bool("hotkey_enabled", false,
                         "Allow the editor hotkey to open the item editor. Off by default, so the library does "
@@ -115,15 +109,6 @@ public final class NeoConfigs {
                         "Allow editing the base damage of an ordinary weapon too.")
                 .bool("health_editor_requires_item", true,
                         "Only open the health editor while holding the health editor item.")
-                .pop();
-
-        spec.push("content")
-                .bool("disable_generated_enchantments", false,
-                        "Generate none of the enchantments defined in config/MerlinTools/*.json.")
-                .pop();
-
-        spec.push("notices")
-                .bool("enabled", true, "Show the join notices business mods registered through MerlinTools.")
                 .pop();
     }
 }
