@@ -98,4 +98,10 @@ public final class MerlinToolsForgeClient {
     public static int macroKeyCode() {
         return OPEN_MACROS.getKey().getValue();
     }
+
+    @SubscribeEvent
+    public static void onAttack(net.minecraftforge.event.entity.player.AttackEntityEvent event) {
+        CombatFeedback.instance().onLocalSwing(event.getEntity(),
+                event.getTarget(), CombatFeedback.isCritical(event.getEntity()));
+    }
 }
