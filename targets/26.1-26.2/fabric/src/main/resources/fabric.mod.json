@@ -19,6 +19,9 @@
         ],
         "client": [
             "com.huziyang520.merlintools.client.MerlinToolsFabricClient"
+        ],
+        "modmenu": [
+            "com.huziyang520.merlintools.fabric.ModMenuIntegration"
         ]
     },
     "mixins": [

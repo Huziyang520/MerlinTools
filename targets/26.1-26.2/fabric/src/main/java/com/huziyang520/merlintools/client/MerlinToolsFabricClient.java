@@ -39,7 +39,9 @@ public class MerlinToolsFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        MezzConfigBridge.install();
+        if (!FabricConfig.install()) {
+            MezzConfigBridge.install();
+        }
         KeyMappingHelper.registerKeyMapping(OPEN_EDITOR);
         KeyMappingHelper.registerKeyMapping(OPEN_MACROS);
 

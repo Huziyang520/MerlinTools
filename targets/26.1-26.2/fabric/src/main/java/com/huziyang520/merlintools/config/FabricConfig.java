@@ -20,15 +20,16 @@ public final class FabricConfig {
      * <p>Cloth Config and Jupiter both write through a {@link TomlBackend}, so the switches keep living in
      * the one documented file no matter which screen is in use, and removing either mod loses nothing.
      */
-    public static void install() {
+    public static boolean install() {
         if (clothPresent()) {
             ConfigManager.setBackend(new TomlBackend("cloth"));
             ConfigScreens.install(ClothScreen::create);
             Constants.LOG.info("[MerlinTools] Cloth Config API found: the configuration screen edits client.toml");
-            return;
+            return true;
         }
         Constants.LOG.info("[MerlinTools] Cloth Config is not installed: client.toml is read directly and "
                 + "/merlintools config cannot open a screen");
+        return false;
     }
 
     /** @return whether Cloth Config is on the classpath */

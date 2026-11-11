@@ -11,15 +11,16 @@ public final class FabricConfig {
     private FabricConfig() {
     }
 
-    public static void install() {
+    public static boolean install() {
         if (clothPresent()) {
             ConfigManager.setBackend(new TomlBackend("cloth"));
             ConfigScreens.install(ClothScreen::create);
             Constants.LOG.info("[MerlinTools] Cloth Config API found: the configuration screen edits client.toml");
-            return;
+            return true;
         }
         Constants.LOG.info("[MerlinTools] Cloth Config is not installed: client.toml is read directly and "
                 + "/merlintools config cannot open a screen");
+        return false;
     }
 
     private static boolean clothPresent() {
