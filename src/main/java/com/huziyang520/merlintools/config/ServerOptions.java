@@ -18,9 +18,7 @@ public final class ServerOptions {
             ConfigOption.bool("tools", "allow_mismatched_enchantments", false),
             ConfigOption.bool("tools", "allow_editing_all_items", false),
             ConfigOption.bool("tools", "allow_non_test_item_damage", false),
-            ConfigOption.bool("tools", "health_editor_requires_item", true),
-            ConfigOption.bool("content", "disable_generated_enchantments", false),
-            ConfigOption.bool("notices", "enabled", true));
+            ConfigOption.bool("tools", "health_editor_requires_item", true));
 
     private ServerOptions() {
     }

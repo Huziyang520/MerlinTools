@@ -19,8 +19,6 @@ public final class ClientOptions {
             ConfigOption.colour("floating_text", "normal_color", "0xFFFFFFFF"),
             ConfigOption.colour("floating_text", "critical_color", "0xFFFFAA00"),
             ConfigOption.number("floating_text", "max_concurrent", 32, 1, 512),
-            ConfigOption.bool("particles", "limit_enabled", true),
-            ConfigOption.number("particles", "limit", 512, 1, 1000000),
             ConfigOption.bool("editor", "hotkey_enabled", false),
             ConfigOption.number("editor", "shift_step", 10, 1, 100000),
             ConfigOption.number("editor", "scroll_step", 1, 1, 1000),
