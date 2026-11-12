@@ -12,6 +12,7 @@ public class MerlinToolsForge {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         if (net.minecraftforge.fml.loading.FMLEnvironment.dist.isClient()) {
             com.huziyang520.merlintools.config.ForgeConfig.install();
+            com.huziyang520.merlintools.client.MerlinToolsConfigEntry.register();
         }
         MerlinTools.init(modBus);
     }
