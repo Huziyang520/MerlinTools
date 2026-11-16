@@ -30,7 +30,7 @@ public class MixinHud {
     private static final int TEXT_OFFSET_X = 12;
     private static final int TEXT_OFFSET_Y = 1;
 
-    @Redirect(method = {"extractPlayerHealth", "extractHealthLevel"}, require = 1, at = @At(value = "INVOKE",
+    @Redirect(method = {"extractPlayerHealth", "extractHealthLevel"}, require = 0, at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/entity/player/Player;getAttributeValue(Lnet/minecraft/core/Holder;)D"))
     private double merlintools$layoutOneRow(Player player, Holder<Attribute> attribute) {
         double real = player.getAttributeValue(attribute);
@@ -44,7 +44,7 @@ public class MixinHud {
         return real > threshold(config) ? ONE_ROW_OF_HEALTH : real;
     }
 
-    @ModifyArgs(method = {"extractPlayerHealth", "extractHealthLevel"}, require = 1, at = @At(value = "INVOKE",
+    @ModifyArgs(method = {"extractPlayerHealth", "extractHealthLevel"}, require = 0, at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/gui/Gui;extractHearts(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/entity/player/Player;IIIIFIIIZ)V"))
     private void merlintools$oneHeartWhenHuge(Args args) {
         Player player = args.get(1);
@@ -56,7 +56,7 @@ public class MixinHud {
         }
     }
 
-    @Inject(method = "extractHearts", at = @At("TAIL"))
+    @Inject(method = "extractHearts", require = 0, at = @At("TAIL"))
     private void merlintools$healthNumbers(GuiGraphicsExtractor graphics, Player player, int xLeft, int yLineBase,
                                          int healthRowHeight, int heartOffsetIndex, float maxHealth,
                                          int currentHealth, int oldHealth, int absorption, boolean blink,
