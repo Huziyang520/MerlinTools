@@ -64,7 +64,6 @@ public class MerlinToolsFabricClient implements ClientModInitializer {
                 DamageFeedbackSink.handle(payload));
         ServerSender.setSink(payload -> ClientPlayNetworking.send((CustomPacketPayload) payload));
         HealthEditorItem.setOpener(target -> MerlinScreens.openHealthEditor(null, target));
-        FabricConfig.install();
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> dispatcher.register(
                 ClientCommands.literal(Constants.MOD_ID)
