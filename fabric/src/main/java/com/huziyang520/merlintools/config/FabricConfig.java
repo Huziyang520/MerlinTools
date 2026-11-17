@@ -1,31 +1,34 @@
-// Wiring of the optional configuration screens on Fabric.
+// Wiring of the configuration screens on Fabric: Forge Config API Port first, Cloth Config after it.
 
 package com.huziyang520.merlintools.config;
 
 import com.huziyang520.merlintools.Constants;
 import com.huziyang520.merlintools.tools.ui.ConfigScreens;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 
 public final class FabricConfig {
-    private static final String CLOTH_API = "me.shedaniel.clothconfig2.api.ConfigBuilder";
+    private static final String PORT_API = "fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry";
 
     private FabricConfig() {
     }
 
     public static boolean install() {
-        if (clothPresent()) {
-            ConfigManager.setBackend(new TomlBackend("cloth"));
-            ConfigScreens.install(ClothScreen::create);
-            Constants.LOG.info("[MerlinTools] Cloth Config API found: the configuration screen edits client.toml");
-            return true;
+        if (!portPresent()) {
+            ConfigManager.setBackend(new TomlBackend("plain"));
+            Constants.LOG.info("[MerlinTools] Forge Config API Port is missing: client.toml is read directly and "
+                    + "/merlintools config cannot open a screen");
+            return false;
         }
-        Constants.LOG.info("[MerlinTools] Cloth Config is not installed: client.toml is read directly and "
-                + "/merlintools config cannot open a screen");
-        return false;
+        FcapConfigs.install();
+        ConfigManager.setBackend(FcapConfigs.clientBackend());
+        ConfigScreens.install(parent -> new ConfigurationScreen(Constants.MOD_ID, parent));
+        Constants.LOG.info("[MerlinTools] Forge Config API Port found: the configuration screen is the NeoForge one");
+        return true;
     }
 
-    private static boolean clothPresent() {
+    private static boolean portPresent() {
         try {
-            Class.forName(CLOTH_API);
+            Class.forName(PORT_API);
             return true;
         } catch (ClassNotFoundException | LinkageError exception) {
             return false;

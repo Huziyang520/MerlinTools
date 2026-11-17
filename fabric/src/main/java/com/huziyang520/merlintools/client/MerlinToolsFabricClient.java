@@ -4,7 +4,6 @@ package com.huziyang520.merlintools.client;
 
 import com.huziyang520.merlintools.Constants;
 import com.huziyang520.merlintools.config.FabricConfig;
-import com.huziyang520.merlintools.config.MezzConfigBridge;
 import com.huziyang520.merlintools.network.DamageFeedbackPayload;
 import com.huziyang520.merlintools.network.DamageFeedbackSink;
 import com.huziyang520.merlintools.network.ServerSender;
@@ -39,9 +38,7 @@ public class MerlinToolsFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        if (!FabricConfig.install()) {
-            MezzConfigBridge.install();
-        }
+        FabricConfig.install();
         KeyMappingHelper.registerKeyMapping(OPEN_EDITOR);
         KeyMappingHelper.registerKeyMapping(OPEN_MACROS);
 
