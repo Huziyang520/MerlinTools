@@ -39,6 +39,8 @@ public class MerlinToolsNeoForgeClient {
 
     private static final KeyMapping OPEN_MACROS = new KeyMapping(
             "key.merlintools.macros", MerlinUi.KEY_RIGHT, CATEGORY);
+    private static boolean editorWasDown;
+    private static boolean macrosWereDown;
 
     public MerlinToolsNeoForgeClient(IEventBus modBus) {
         modBus.addListener(this::onRegisterKeyMappings);
@@ -89,6 +91,7 @@ public class MerlinToolsNeoForgeClient {
     private void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.register(OPEN_EDITOR);
         event.register(OPEN_MACROS);
+        Constants.LOG.info("[MerlinTools] the item editor hotkey is {}", OPEN_EDITOR.saveString());
     }
 
     private void onRegisterClientPayloads(
@@ -105,13 +108,21 @@ public class MerlinToolsNeoForgeClient {
     private void onClientTick(ClientTickEvent.Post event) {
         net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();
         MerlinScreens.tick();
-        while (OPEN_EDITOR.consumeClick()) {
+        boolean editorDown = OPEN_EDITOR.isDown();
+        if (editorDown && !editorWasDown) {
             MerlinScreens.openItemEditorFromHotkey();
         }
+        editorWasDown = editorDown;
+        boolean macrosDown = OPEN_MACROS.isDown();
+        if (macrosDown && !macrosWereDown && minecraft.player != null) {
+            MerlinScreens.openMacroScreen(null);
+        }
+        macrosWereDown = macrosDown;
+        while (OPEN_EDITOR.consumeClick()) {
+            editorWasDown = true;
+        }
         while (OPEN_MACROS.consumeClick()) {
-            if (minecraft.player != null) {
-                MerlinScreens.openMacroScreen(null);
-            }
+            macrosWereDown = true;
         }
         if (minecraft.player != null) {
             CombatFeedback.instance().tick(minecraft);

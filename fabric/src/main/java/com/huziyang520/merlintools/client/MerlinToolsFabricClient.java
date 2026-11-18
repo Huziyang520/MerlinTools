@@ -35,6 +35,8 @@ public class MerlinToolsFabricClient implements ClientModInitializer {
 
     private static final KeyMapping OPEN_MACROS = new KeyMapping(
             "key.merlintools.macros", MerlinUi.KEY_RIGHT, CATEGORY);
+    private static boolean editorWasDown;
+    private static boolean macrosWereDown;
 
     @Override
     public void onInitializeClient() {
@@ -42,13 +44,24 @@ public class MerlinToolsFabricClient implements ClientModInitializer {
         KeyMappingHelper.registerKeyMapping(OPEN_EDITOR);
         KeyMappingHelper.registerKeyMapping(OPEN_MACROS);
 
+        Constants.LOG.info("[MerlinTools] the item editor hotkey is {}", OPEN_EDITOR.saveString());
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             MerlinScreens.tick();
-            while (OPEN_EDITOR.consumeClick()) {
+            boolean editorDown = OPEN_EDITOR.isDown();
+            if (editorDown && !editorWasDown) {
                 MerlinScreens.openItemEditorFromHotkey();
             }
-            while (OPEN_MACROS.consumeClick()) {
+            editorWasDown = editorDown;
+            boolean macrosDown = OPEN_MACROS.isDown();
+            if (macrosDown && !macrosWereDown) {
                 MerlinScreens.openMacroScreen(null);
+            }
+            macrosWereDown = macrosDown;
+            while (OPEN_EDITOR.consumeClick()) {
+                editorWasDown = true;
+            }
+            while (OPEN_MACROS.consumeClick()) {
+                macrosWereDown = true;
             }
             CombatFeedback.instance().tick(client);
             MacroStorage.tick(client);
