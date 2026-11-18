@@ -43,6 +43,7 @@ public class MerlinToolsFabricClient implements ClientModInitializer {
         KeyMappingHelper.registerKeyMapping(OPEN_MACROS);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            MerlinScreens.tick();
             while (OPEN_EDITOR.consumeClick()) {
                 MerlinScreens.openItemEditorFromHotkey();
             }

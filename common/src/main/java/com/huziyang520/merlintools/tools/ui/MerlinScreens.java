@@ -17,7 +17,22 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public final class MerlinScreens {
+    private static Screen pendingScreen;
+
     private MerlinScreens() {
+    }
+
+    private static void show(Screen screen) {
+        pendingScreen = screen;
+    }
+
+    public static void tick() {
+        Screen next = pendingScreen;
+        if (next == null) {
+            return;
+        }
+        pendingScreen = null;
+        Minecraft.getInstance().setScreenAndShow(next);
     }
 
     private static boolean mayOpenEditorLocally(Player player, boolean health) {
@@ -91,7 +106,7 @@ public final class MerlinScreens {
         if (!mayOpenEditorLocally(player, false)) {
             return;
         }
-        minecraft.setScreenAndShow(new ItemEditorScreen(null, held));
+        show(new ItemEditorScreen(null, held));
     }
 
     public static void openItemEditorFromHotkey() {
@@ -111,7 +126,7 @@ public final class MerlinScreens {
                     + "(client.toml: macros.enabled = false)");
             return;
         }
-        Minecraft.getInstance().setScreenAndShow(new MacroScreen(parent));
+        show(new MacroScreen(parent));
     }
 
     public static boolean openConfigScreen(Screen parent) {
@@ -147,7 +162,7 @@ public final class MerlinScreens {
         if (!mayOpenEditorLocally(player, true)) {
             return false;
         }
-        minecraft.setScreenAndShow(new HealthEditorScreen(parent, target));
+        show(new HealthEditorScreen(parent, target));
         return true;
     }
 
@@ -160,6 +175,6 @@ public final class MerlinScreens {
         if (!mayOpenEditorLocally(player, true)) {
             return;
         }
-        minecraft.setScreenAndShow(new HealthEditorScreen(null, player));
+        show(new HealthEditorScreen(null, player));
     }
 }

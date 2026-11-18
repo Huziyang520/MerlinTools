@@ -104,6 +104,7 @@ public class MerlinToolsNeoForgeClient {
 
     private void onClientTick(ClientTickEvent.Post event) {
         net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();
+        MerlinScreens.tick();
         while (OPEN_EDITOR.consumeClick()) {
             MerlinScreens.openItemEditorFromHotkey();
         }
